@@ -11,6 +11,9 @@ import java.util.EnumSet;
 
 public class Bot {
     public static void main(String[] args) throws LoginException {
+
+        System.out.println("Token: " + System.getenv("TOKEN"));
+
         EventWaiter waiter = new EventWaiter();
 
         DefaultShardManagerBuilder.createDefault(System.getenv("TOKEN"),

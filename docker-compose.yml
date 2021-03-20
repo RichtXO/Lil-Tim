@@ -1,0 +1,16 @@
+version: "3.4"
+
+services:
+  Lil_Tim:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+       - TOKEN=${TOKEN:-null}
+       - PREFIX=${PREFIX:-null}
+       - OWNER_ID=${OWNER_ID:-null}
+       - YOUTUBE_KEY=${YOUTUBE_KEY:-null}
+       - SPOTIFY_ID=${SPOTIFY_ID:-null}
+       - SPOTIFY_SECRET=${SPOTIFY_SECRET:-null}
+
+

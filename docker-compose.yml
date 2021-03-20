@@ -7,11 +7,11 @@ services:
       context: ./
       dockerfile: Dockerfile
     environment:
-       - TOKEN=${TOKEN:-null}
-       - PREFIX=${PREFIX:-null}
-       - OWNER_ID=${OWNER_ID:-null}
-       - YOUTUBE_KEY=${YOUTUBE_KEY:-null}
-       - SPOTIFY_ID=${SPOTIFY_ID:-null}
-       - SPOTIFY_SECRET=${SPOTIFY_SECRET:-null}
+       - TOKEN=${TOKEN:-ADD_TOKEN}
+       - PREFIX=${PREFIX:-;;}
+       - OWNER_ID=${OWNER_ID:-ADD_OWNER_ID}
+       - YOUTUBE_KEY=${YOUTUBE_KEY:-ADD_YOUTUBE_KEY}
+       - SPOTIFY_ID=${SPOTIFY_ID:-ADD_SPOTIFY_ID}
+       - SPOTIFY_SECRET=${SPOTIFY_SECRET:-ADD_SPOTIFY_SECRET}
 
 

@@ -27,7 +27,7 @@ jobs:
     environment: lilTim-prod
 
     env:
-      HOST: ${{ secrets.TOKEN }}
+      TOKEN: ${{ secrets.TOKEN }}
       PREFIX: ${{ secrets.PREFIX }}
       OWNER_ID: ${{ secrets.OWNER_ID }}
       YOUTUBE_KEY: ${{ secrets.YOUTUBE_KEY }}

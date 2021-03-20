@@ -1,6 +1,6 @@
 plugins {
-    id 'java'
-    id 'application'
+    id "application"
+    id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
 mainClassName = 'me.richtxo.Bot'
@@ -8,12 +8,11 @@ version '1.0'
 
 repositories {
     jcenter()
-    mavenCentral()
 }
 
 dependencies {
-    implementation 'com.jagrosh:jda-utilities:3.0.5'
-    implementation 'net.dv8tion:JDA:4.2.0_242'
+    compile 'com.jagrosh:jda-utilities:3.0.5'
+    compile 'net.dv8tion:JDA:4.2.0_242'
 
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
@@ -22,10 +21,4 @@ dependencies {
     implementation group: 'com.google.apis', name: 'google-api-services-youtube', version: 'v3-rev222-1.25.0'
 }
 
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'me.richtxo.Bot'
-        )
-    }
-}
+compileJava.options.encoding = 'UTF-8'

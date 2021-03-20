@@ -37,6 +37,7 @@ jobs:
       - uses:  actions/checkout@v2
         with:
           ref: master
+
       - name: Build image
         run: |
           docker-compose -f docker-compose.yml build

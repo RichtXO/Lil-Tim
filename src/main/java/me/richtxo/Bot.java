@@ -1,7 +1,5 @@
 package me.richtxo;
 
-import me.richtxo.commands.*;
-import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -15,11 +13,8 @@ public class Bot {
     public static void main(String[] args) throws LoginException {
         EventWaiter waiter = new EventWaiter();
 
-        CommandClientBuilder client = new CommandClientBuilder();
-        client.setPrefix(System.getenv("PREFIX"));
-
-
         DefaultShardManagerBuilder.createDefault(System.getenv("TOKEN"),
+                GatewayIntent.GUILD_PRESENCES,
                 GatewayIntent.GUILD_MEMBERS,
                 GatewayIntent.GUILD_MESSAGES,
                 GatewayIntent.GUILD_VOICE_STATES
@@ -29,9 +24,9 @@ public class Bot {
                 CacheFlag.EMOTE
         ))
         .enableCache(CacheFlag.VOICE_STATE)
-        .addEventListeners(waiter, client.build())
-        .setShardsTotal(4)
+        .addEventListeners(new Listener(waiter), waiter)
         .setActivity(Activity.listening("RichtXO"))
+        .setShardsTotal(4)
         .build();
     }
 }

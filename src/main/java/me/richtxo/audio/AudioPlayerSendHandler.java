@@ -1,10 +1,9 @@
-package me.richtxo.lavaplayer;
+package me.richtxo.audio;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 
-import javax.annotation.Nullable;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 

@@ -44,6 +44,6 @@ jobs:
           
       - name: Update Lil Tim
         run: |
-          docker-compose -f docker-compose.yml stop Lil_Tim &&
-          docker-ccompose -f docker-compose.yml rm -f Lil_Tim &&
-          docker-compose -f docker-compose.yml up
+#          docker-compose -f docker-compose.yml stop lil_tim &&
+#          docker-compose -f docker-compose.yml rm -f lil_tim &&
+          docker-compose -f docker-compose.yml up -d

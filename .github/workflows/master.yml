@@ -31,7 +31,7 @@ jobs:
       OWNER_ID: ${{ secrets.OWNER_ID }}
       YOUTUBE_KEY: ${{ secrets.YOUTUBE_KEY }}
       SPOTIFY_ID: ${{ secrets.SPOTIFY_ID }}
-      SPOTIFY_SECRET: ${{ SPOTIFY_SECRET }}
+      SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
     
     steps:
       - uses:  actions/checkout@v2

@@ -1,0 +1,48 @@
+name: Master CI CD
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 15
+        
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with Gradle
+      run: ./gradlew build
+      
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    
+    env:
+      HOST: ${{ secrets.TOKEN }}
+      PREFIX: ${{ secrets.PREFIX }}
+      OWNER_ID: ${{ secrets.OWNER_ID }}
+      YOUTUBE_KEY: ${{ secrets.YOUTUBE_KEY }}
+      SPOTIFY_ID: ${{ secrets.SPOTIFY_ID }}
+      SPOTIFY_SECRET: ${{ SPOTIFY_SECRET }}
+    
+    steps:
+      - uses:  actions/checkout@v2
+        with:
+          ref: master
+      - name: Build image
+        run: |
+          docker-compose -f docker-compose.yml build
+          
+      - name: Update Lil Tim
+        run: |
+          docker-compose -f docker-compose.yml stop Lil_Tim &&
+          docker-ccompose -f docker-compose.yml rm -f Lil_Tim &&
+          docker-compose -f docker-compose.yml up

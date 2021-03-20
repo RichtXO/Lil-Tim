@@ -24,6 +24,7 @@ public class CommandManager {
 
         addCommand(new JoinCommand());
         addCommand(new LeaveCommand());
+        addCommand(new PlayCommand(waiter));
     }
 
     public List<Command> getCommands(){

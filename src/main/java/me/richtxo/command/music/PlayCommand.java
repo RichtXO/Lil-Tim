@@ -10,7 +10,6 @@ import me.richtxo.command.Command;
 import me.richtxo.command.CommandContext;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 
@@ -92,6 +91,7 @@ public class PlayCommand extends Command {
         }
     }
 
+
     private void searchYoutube(String input, CommandContext ctx) {
         List<SearchResult> results;
         try {
@@ -110,8 +110,8 @@ public class PlayCommand extends Command {
         }
 
         if (!results.isEmpty()) {
-
-            GuildMessageReceivedEvent event = ctx.getEvent();
+            final GuildMessageReceivedEvent event = ctx.getEvent();
+            final TextChannel channel = event.getChannel();
 
             EmbedBuilder builder = new EmbedBuilder()
                     .setTitle(event.getJDA().getSelfUser().getName() + " Music Selection")
@@ -128,48 +128,42 @@ public class PlayCommand extends Command {
                 ));
             }
 
-
-            event.getChannel().sendMessage(builder.build()).queue((message) -> {
+            channel.sendMessage(builder.build()).queue((message) -> {
                 this.waiter.waitForEvent(
-                        MessageReceivedEvent.class,
-                        (e) -> !e.getMessage().isWebhookMessage(),
-                        (e) -> {
-                            MessageChannel channel = e.getChannel();
-                            String content = e.getMessage().getContentRaw();
-
-                            if (e.getAuthor().getIdLong() == message.getAuthor().getIdLong()){
-                                if (content.equals("cancel")){
-                                    ctx.getEvent().getChannel().sendMessage("Cancel Search for `" +
-                                            message.getMember().getEffectiveName() + "`").queue();
-                                    message.getJDA().removeEventListener(this); // stop listening
-                                }
-                                else {
-                                    try {
-                                        int selection = Integer.parseInt(content);
-                                        if (selection >= 1 && selection <= 5) {
-                                            PlayerManager manager = PlayerManager.getInstance();
-
-                                            manager.loadAndPlay(message.getTextChannel(),
-                                                    "https://www.youtube.com/watch?v=" +
-                                                            results.get(selection - 1).getId().getVideoId());
-                                            event.getJDA().removeEventListener(this);
-                                        } else
-                                            channel.sendMessage("Select between `1 - 5` " + event.getMember().
-                                                    getEffectiveName() + "!").queue();
-                                    } catch (NumberFormatException nfe) {
-                                        channel.sendMessage("Select between `1 - 5` " +
-                                                event.getMember().getEffectiveName() + "!").queue();
-                                    }
+                    GuildMessageReceivedEvent.class,
+                    e -> {
+                        if (e.getChannel().getId().equals(channel.getId()) &&
+                                e.getAuthor().getId().equals(event.getAuthor().getId())){
+                            if (e.getMessage().getContentRaw().equals("cancel")){
+                                channel.sendMessage("Cancel Search for `" + event.getMember().getEffectiveName() + "`").queue();
+                                event.getJDA().removeEventListener(this);
+                            }
+                            else{
+                                try {
+                                    int temp = Integer.parseInt(e.getMessage().getContentRaw());
+                                    if (temp >= 1 && temp <= 5)
+                                        return true;
+                                } catch (NumberFormatException nfe){
+                                    channel.sendMessage("Select between `1 - 5` " +
+                                            event.getMember().getEffectiveName() + "!").queue();
+                                    return false;
                                 }
                             }
+                        }
+                        return false;
+                    },
+                    e -> {
+                        int selection = Integer.parseInt(e.getMessage().getContentRaw());
+                        PlayerManager manager = PlayerManager.getInstance();
+
+                        manager.loadAndPlay(channel, "https://www.youtube.com/watch?v=" +
+                                results.get(selection - 1).getId().getVideoId());
                         }, 15, TimeUnit.SECONDS,
-                        () ->  event.getChannel().sendMessage("Time out! " + event.getMember().getEffectiveName() +
-                                " too slow!").queue()
+                        () ->  channel.sendMessage("Time out, " + event.getMember().getEffectiveName() + "!").queue()
                 );
-
             });
-
-        } else {
+        }
+        else {
             ctx.getEvent().getChannel().sendMessage("I can't find that song...").queue();
         }
     }

@@ -16,15 +16,20 @@ public class CommandManager {
     private final List<Command> commandlist = new ArrayList<>();
 
     public CommandManager(EventWaiter waiter){
+        addCommand(new AboutCommand());
+        addCommand(new HelpCommand(this));
+
         addCommand(new PingCommand());
         addCommand(new UptimeCommand());
-        addCommand(new HelpCommand(this));
 
         addCommand(new ServerInfoCommand());
 
         addCommand(new JoinCommand());
         addCommand(new LeaveCommand());
         addCommand(new PlayCommand(waiter));
+        addCommand(new PauseCommand());
+        addCommand(new NowPlaying());
+
     }
 
     public List<Command> getCommands(){

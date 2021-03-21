@@ -31,8 +31,8 @@ public class AboutCommand extends Command {
             .addField("Servers", String.valueOf(sm.getGuildCache().size()), true)
             .addField("Users", String.valueOf(sm.getUserCache().size()), true)
             .addField("Avg Ping (ms)", String.valueOf(Math.round(sm.getAverageGatewayPing())), true)
+            .addField("GitHub", "[`Lil Tim's Code`](https://github.com/RichtXO/Lil-Tim-Discord-Bot)", true)
             .addField("Developer", "RichtXO#0000", true)
-            .addField("GitHub", "`[Lil Tim's Code](https://github.com/RichtXO/Lil-Tim-Discord-Bot)`", true)
             .addBlankField(false)
             .addField("*Useful links:*",
                 "[Invite Me](https://discord.com/oauth2/authorize?client_id=736748544706478080&scope=bot)" ,

@@ -23,6 +23,7 @@ public class CommandManager {
         addCommand(new UptimeCommand());
 
         addCommand(new ServerInfoCommand());
+        addCommand(new UserInfoCommand());
 
         addCommand(new JoinCommand());
         addCommand(new LeaveCommand());

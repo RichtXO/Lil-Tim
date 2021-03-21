@@ -47,7 +47,7 @@ public class HelpCommand extends Command {
     private void listCommands(GuildMessageReceivedEvent event){
         EmbedBuilder builder = new EmbedBuilder()
                 .setTitle(event.getJDA().getSelfUser().getName() + " Help")
-                .setColor(0xad0000)
+                .setColor(event.getMember().getColor())
                 .setThumbnail(String.valueOf(event.getJDA().getSelfUser().getAvatarUrl()))
                 .setFooter("Lil Tim by RichtXO", String.valueOf(event.getJDA().getSelfUser().getAvatarUrl()))
                 .setDescription(" These are the available commands for Lil Tim.\n" +

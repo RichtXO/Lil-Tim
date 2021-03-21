@@ -25,15 +25,15 @@ public class AboutCommand extends Command {
                 .setColor(0xad0000)
                 .setThumbnail(String.valueOf(event.getJDA().getSelfUser().getAvatarUrl()))
                 .setFooter("Lil Tim by RichtXO", String.valueOf(event.getJDA().getSelfUser().getAvatarUrl()))
-                .setDescription("Hello, I'm **Lil Tim**, yet another Java Music Discord Bot but with more features!" +
-                        "Currently being hosted in a RPi 4!")
-                .addField("Total Shards", String.valueOf(sm.getShardsTotal()), true)
+                .setDescription("Hello, I'm **Lil Tim**, yet another Java Music Discord Bot but with more features! " +
+                        "Currently being hosted on a RPi 4!")
                 .addField("Discord Library", "[`JDA`](https://github.com/DV8FromTheWorld/JDA)", true)
+                .addField("Total Shards", String.valueOf(sm.getShardsTotal()), true)
                 .addField("Servers", String.valueOf(sm.getGuildCache().size()), true)
-                .addField("Users", String.valueOf(sm.getUserCache().size()), true)
-                .addField("Avg Ping (ms)", String.valueOf(Math.round(sm.getAverageGatewayPing())), true)
                 .addField("GitHub", "[`Lil Tim's Code`]" +
                         "(https://github.com/RichtXO/Lil-Tim-Discord-Bot)", true)
+                .addField("Avg Ping (ms)", String.valueOf(Math.round(sm.getAverageGatewayPing())), true)
+                .addField("Users", String.valueOf(sm.getUserCache().size()), true)
                 .addField("Developer", "RichtXO#0000", true)
                 .addBlankField(false)
                 .addField("*Useful links:*",

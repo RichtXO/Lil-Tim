@@ -1,4 +1,4 @@
-FROM gradle:jdk15 AS build
+FROM gradle:jre15 AS build
 WORKDIR /home/gradle/src
 ADD --chown=gradle . .
 RUN gradle build --no-daemon

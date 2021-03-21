@@ -36,13 +36,13 @@ public class NowPlaying extends Command {
         EmbedBuilder builder = new EmbedBuilder()
             .setColor(ctx.getGuild().getSelfMember().getColor())
             .setFooter("Lil Tim by RichtXO", String.valueOf(ctx.getEvent().getJDA().getSelfUser().getAvatarUrl()))
-            .setTitle(String.format("**Playing** [%s](%s)", info.title, info.uri))
             .setDescription(String.format(
-                "%s `%s` - `%s`\n",
+                "**Playing** [%s](%s)\n\n%s `%s` - `%s`\n",
+                info.title,
+                info.uri,
                 player.isPaused() ? "\u23F8" : "▶",
                 formatTime(player.getPlayingTrack().getPosition()),
-                formatTime(player.getPlayingTrack().getDuration()))
-            );
+                formatTime(player.getPlayingTrack().getDuration())));
 
 
         channel.sendMessage(builder.build()).queue();

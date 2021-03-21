@@ -22,7 +22,8 @@ public class LeaveCommand extends Command {
         AudioManager audioManager = ctx.getEvent().getGuild().getAudioManager();
 
         if (!audioManager.isConnected()) {
-            channel.sendMessage("I already left... Stop making me feel unwanted...").queue();
+            channel.sendMessage("I already left... Stop making me feel unwanted, " +
+                    ctx.getEvent().getMember().getEffectiveName() + ".").queue();
             return;
         }
 
@@ -36,7 +37,8 @@ public class LeaveCommand extends Command {
 
         assert voiceChannel != null;
         if (!voiceChannel.getMembers().contains(ctx.getEvent().getMember())) {
-            channel.sendMessage("You have to be in the same voice channel as me to kick me!").queue();
+            channel.sendMessage("You have to be in the same voice channel as me to kick me, " +
+                    ctx.getEvent().getMember().getEffectiveName() + "!").queue();
             return;
         }
 

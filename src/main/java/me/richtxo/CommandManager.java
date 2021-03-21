@@ -28,7 +28,13 @@ public class CommandManager {
         addCommand(new LeaveCommand());
         addCommand(new PlayCommand(waiter));
         addCommand(new PauseCommand());
+        addCommand(new StopCommand());
+        addCommand(new SkipCommand());
         addCommand(new NowPlaying());
+        addCommand(new QueueCommand());
+        addCommand(new RepeatCommand());
+        addCommand(new RepeatOffCommand());
+
 
     }
 

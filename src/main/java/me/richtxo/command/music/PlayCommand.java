@@ -57,7 +57,7 @@ public class PlayCommand extends Command {
 
             final GuildVoiceState memberVoiceState = Objects.requireNonNull(ctx.getEvent().getMember()).getVoiceState();
             if (!memberVoiceState.inVoiceChannel()){
-                channel.sendMessage("You expect me to join to join a channel when you're not in one...").queue();
+                channel.sendMessage("You expect me to join a channel when you're not in one...").queue();
                 return;
             }
 

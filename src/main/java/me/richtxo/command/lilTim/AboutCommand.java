@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
 public class AboutCommand extends Command {
-    public AboutCommand (){
+    public AboutCommand() {
         this.name = "about";
         this.category = "Lil Tim";
         this.help = "Shows info about me!";
@@ -18,18 +18,25 @@ public class AboutCommand extends Command {
         ShardManager sm = ctx.getGuild().getJDA().getShardManager();
         GuildMessageReceivedEvent event = ctx.getEvent();
 
+        assert sm != null;
         EmbedBuilder builder = new EmbedBuilder()
             .setTitle(event.getJDA().getSelfUser().getName())
             .setColor(0xad0000)
             .setThumbnail(String.valueOf(event.getJDA().getSelfUser().getAvatarUrl()))
             .setFooter("Lil Tim by RichtXO", String.valueOf(event.getJDA().getSelfUser().getAvatarUrl()))
-            .setDescription("Hello, I'm **Lil Tim**, yet another Java Discord Bot!")
-            .addField("Stats", sm.getShardsTotal()+ " Shards\n" + sm.getGuildCache().size() +
-                    " Servers", true)
-            .addField("", sm.getUserCache().size() + " Users\n" +
-                    Math.round(sm.getAverageGatewayPing()) + "ms Avg Ping", true)
-            .addField("", sm.getTextChannelCache().size() + " Text Channels\n" +
-                    sm.getVoiceChannelCache().size() + " Voice Channels", true);
+            .setDescription("Hello, I'm **Lil Tim**, yet another Java Music Discord Bot but with more features!\n" +
+                    "Currently being hosted in a RPi 4!")
+            .addField("Total Shards", String.valueOf(sm.getShardsTotal()), true)
+            .addField("Discord Library", "[JDA](https://github.com/DV8FromTheWorld/JDA)", true)
+            .addField("Servers", String.valueOf(sm.getGuildCache().size()), true)
+            .addField("Users", String.valueOf(sm.getUserCache().size()), true)
+            .addField("Avg Ping (ms)", String.valueOf(Math.round(sm.getAverageGatewayPing())), true)
+            .addField("Developer", "RichtXO#0000", true)
+            .addField("GitHub", "`[Lil Tim's Code](https://github.com/RichtXO/Lil-Tim-Discord-Bot)`", true)
+            .addBlankField(false)
+            .addField("*Useful links:*",
+                "[Invite Me](https://discord.com/oauth2/authorize?client_id=736748544706478080&scope=bot)" ,
+                false);
 
         ctx.getEvent().getChannel().sendMessage(builder.build()).queue();
     }

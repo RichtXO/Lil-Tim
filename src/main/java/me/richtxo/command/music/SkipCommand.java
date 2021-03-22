@@ -28,9 +28,9 @@ public class SkipCommand extends Command {
     public void handle(CommandContext ctx) {
         TextChannel channel = ctx.getEvent().getChannel();
         final GuildVoiceState memberVoiceState = Objects.requireNonNull(ctx.getEvent().getMember()).getVoiceState();
-        if (memberVoiceState == null){
+        if (memberVoiceState == null)
             return;
-        }
+
         if (!memberVoiceState.inVoiceChannel()){
             channel.sendMessage("You expect me to skip a song when you're not in the VC, " +
                     ctx.getEvent().getMember().getEffectiveName() + "?!").queue();

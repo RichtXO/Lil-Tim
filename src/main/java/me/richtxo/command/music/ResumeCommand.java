@@ -9,11 +9,11 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.Objects;
 
-public class StopCommand extends Command {
-    public StopCommand(){
-        this.name = "stop";
+public class ResumeCommand extends Command {
+    public ResumeCommand(){
+        this.name = "resume";
         this.category = "music";
-        this.help = "Stops the music player and clears the queue";
+        this.help = "Resume playing those wonderful tracks!";
     }
 
     @Override
@@ -22,20 +22,23 @@ public class StopCommand extends Command {
         final GuildVoiceState memberVoiceState = Objects.requireNonNull(ctx.getEvent().getMember()).getVoiceState();
         if (memberVoiceState == null)
             return;
-
         if (!memberVoiceState.inVoiceChannel()){
-            channel.sendMessage("You expect me to stop the music when you're not in the VC, " +
+            channel.sendMessage("You expect me to resume when you're not in the VC, " +
                     ctx.getEvent().getMember().getEffectiveName() + "?!").queue();
             return;
         }
 
+
         PlayerManager playerManager = PlayerManager.getInstance();
         GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getEvent().getGuild());
+        if (!musicManager.player.isPaused()){
+            channel.sendMessage("Nani? You deaf or something? I'm already playing," +
+                    Objects.requireNonNull(ctx.getEvent().getMember()).getEffectiveName() + "!").queue();
+            return;
+        }
 
-        musicManager.scheduler.getQueue().clear();
-        musicManager.player.stopTrack();
         musicManager.player.setPaused(false);
-
-        channel.sendMessage("Stopping the player and clearing the queue").queue();
+        channel.sendMessage("Music is now resuming to play, " +
+                Objects.requireNonNull(ctx.getEvent().getMember()).getEffectiveName() + "!").queue();
     }
 }

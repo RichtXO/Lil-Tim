@@ -21,6 +21,9 @@ public class RepeatOffCommand extends Command {
     public void handle(CommandContext ctx) {
         TextChannel channel = ctx.getEvent().getChannel();
         final GuildVoiceState memberVoiceState = Objects.requireNonNull(ctx.getEvent().getMember()).getVoiceState();
+        if (memberVoiceState == null)
+            return;
+
         if (!memberVoiceState.inVoiceChannel()){
             channel.sendMessage("You expect me to stop repeating a song that you're not even listening to, " +
                     ctx.getEvent().getMember().getEffectiveName() + "?!").queue();

@@ -16,7 +16,7 @@ public class NowPlaying extends Command {
         this.name = "nowplaying";
         this.category = "music";
         this.help = "Shows the current playing track";
-        this.aliases = new String[]{"np"};
+        this.aliases = new String[]{"np", "now"};
     }
 
     @Override

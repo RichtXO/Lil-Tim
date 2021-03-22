@@ -66,15 +66,16 @@ public class SkipCommand extends Command {
                         AudioTrack info = it.next();
                         String trackName = info.getInfo().title;
                         queue.remove(info);
-                        channel.sendMessage(String.format("*Skipping* [%s](%s)`",
+                        channel.sendMessage(String.format("*Skipping* (%s)[%s]",
                                 info.getInfo().title,
                                 info.getInfo().uri)
                         ).queue();
+                        return;
                     }
                     current++;
                 }
             } catch (NumberFormatException nfe){
-                channel.sendMessage("Invalid number," + ctx.getEvent().getMember().getEffectiveName()
+                channel.sendMessage("Invalid number, " + ctx.getEvent().getMember().getEffectiveName()
                         + "!").queue();
             }
 

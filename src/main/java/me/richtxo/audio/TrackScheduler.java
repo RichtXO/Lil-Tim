@@ -11,6 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class TrackScheduler extends AudioEventAdapter {
     private boolean repeat = false;
     private final AudioPlayer player;
+    // TODO: change blockingqueue to linked list
     private final BlockingQueue<AudioTrack> queue;
     AudioTrack lastTrack;
 
@@ -36,7 +37,6 @@ public class TrackScheduler extends AudioEventAdapter {
     public BlockingQueue<AudioTrack> getQueue() {
         return queue;
     }
-
 
     public void nextTrack(){
         this.player.startTrack(this.queue.poll(), false);

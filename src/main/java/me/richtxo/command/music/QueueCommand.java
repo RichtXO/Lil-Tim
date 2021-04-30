@@ -47,7 +47,8 @@ public class QueueCommand extends Command {
             AudioTrackInfo info = track.getInfo();
 
             builder.appendDescription(String.format(
-                "%s - %s - `%02d:%02d`\n",
+                "`%d:` %s - %s - `%02d:%02d`\n",
+                i + 1,
                 info.title,
                 info.author,
                 (info.length / 1000) / 60,

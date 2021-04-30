@@ -44,8 +44,8 @@ public class SkipCommand extends Command {
         TrackScheduler scheduler = musicManager.scheduler;
 
         if (player.getPlayingTrack() == null) {
-            channel.sendMessage("The music player isn't playing jack, " +
-                    ctx.getEvent().getMember().getEffectiveName()).queue();
+            channel.sendMessage("The music player isn't playing jack, `" +
+                    ctx.getEvent().getMember().getEffectiveName()+ "`").queue() ;
             return;
         }
 

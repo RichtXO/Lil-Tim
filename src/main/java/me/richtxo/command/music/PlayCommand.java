@@ -105,7 +105,7 @@ public class PlayCommand extends Command {
                     .getItems();
         } catch (Exception e) {
             //e.printStackTrace();
-            ctx.getEvent().getChannel().sendMessage("I can't find that song...").queue();
+            ctx.getEvent().getChannel().sendMessage("I can't find `" + input + "` song...").queue();
             return;
         }
 
@@ -134,28 +134,33 @@ public class PlayCommand extends Command {
                     e -> {
                         if (e.getChannel().getId().equals(channel.getId()) &&
                                 e.getAuthor().getId().equals(event.getAuthor().getId())){
-                            if (e.getMessage().getContentRaw().equals("cancel")){
-                                channel.sendMessage("Cancel Search for `" + event.getMember().getEffectiveName() + "`").queue();
-                                event.getJDA().removeEventListener(this);
-                            }
+                            if (e.getMessage().getContentRaw().equals("cancel"))
+                                return true;
+
                             else{
                                 try {
                                     int temp = Integer.parseInt(e.getMessage().getContentRaw());
                                     if (temp >= 1 && temp <= 5)
                                         return true;
+
+                                    channel.sendMessage("Select between `1 - 5` " +
+                                            event.getMember().getEffectiveName() + "!").queue();
                                 } catch (NumberFormatException nfe){
                                     channel.sendMessage("Select between `1 - 5` " +
                                             event.getMember().getEffectiveName() + "!").queue();
-                                    return false;
                                 }
                             }
                         }
                         return false;
                     },
                     e -> {
+                        if (e.getMessage().getContentRaw().equals("cancel")){
+                            channel.sendMessage("Cancel Search for `" + event.getMember().getEffectiveName() + "`").queue();
+                            return;
+                        }
+
                         int selection = Integer.parseInt(e.getMessage().getContentRaw());
                         PlayerManager manager = PlayerManager.getInstance();
-
                         manager.loadAndPlay(channel, "https://www.youtube.com/watch?v=" +
                                 results.get(selection - 1).getId().getVideoId());
                         }, 15, TimeUnit.SECONDS,

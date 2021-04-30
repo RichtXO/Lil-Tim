@@ -20,7 +20,6 @@ public class CommandManager {
         addCommand(new HelpCommand(this));
 
         addCommand(new PingCommand());
-        addCommand(new UptimeCommand());
 
         addCommand(new ServerInfoCommand());
         addCommand(new UserInfoCommand());

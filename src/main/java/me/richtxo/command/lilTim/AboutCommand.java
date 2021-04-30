@@ -6,6 +6,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+
 public class AboutCommand extends Command {
     public AboutCommand() {
         this.name = "about";
@@ -18,6 +21,13 @@ public class AboutCommand extends Command {
     public void handle(CommandContext ctx) {
         ShardManager sm = ctx.getGuild().getJDA().getShardManager();
         GuildMessageReceivedEvent event = ctx.getEvent();
+
+        RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+        long uptime = runtimeMXBean.getUptime();
+        long uptimeInSeconds = uptime / 1000;
+        long days = uptimeInSeconds / 86400;
+        long hours = (uptimeInSeconds / 3600) - (days * 24);
+        long minutes = (uptimeInSeconds / 60) - (days * 1440) - (hours * 60);
 
         if (sm != null){
             EmbedBuilder builder = new EmbedBuilder()
@@ -35,6 +45,7 @@ public class AboutCommand extends Command {
                 .addField("Avg Ping (ms)", String.valueOf(Math.round(sm.getAverageGatewayPing())), true)
                 .addField("Users", String.valueOf(sm.getUserCache().size()), true)
                 .addField("Developer", "RichtXO#0000", true)
+                .addField("Updated Since", String.format("`%s days, %s hours, %s minutes`", days, hours, minutes), true)
                 .addBlankField(false)
                 .addField("*Useful links:*",
                         "[Invite Me](https://discord.com/oauth2/authorize?client_id=736748544706478080&scope=bot)" ,

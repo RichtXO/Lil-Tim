@@ -15,6 +15,8 @@ import net.dv8tion.jda.api.managers.AudioManager;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -96,9 +98,9 @@ public class PlayCommand extends Command {
         List<SearchResult> results;
         try {
             results = youtube.search()
-                    .list("id,snippet")
+                    .list(Arrays.asList("id", "snippet"))
                     .setQ(input)
-                    .setType("video")
+                    .setType(Collections.singletonList("video"))
                     .setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)")
                     .setKey(System.getenv("YOUTUBE_KEY"))
                     .execute()

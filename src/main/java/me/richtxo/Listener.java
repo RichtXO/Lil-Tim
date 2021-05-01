@@ -1,13 +1,8 @@
 package me.richtxo;
 
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
-import me.richtxo.audio.GuildMusicManager;
-import me.richtxo.audio.PlayerManager;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.ReadyEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -17,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +21,7 @@ public class Listener extends ListenerAdapter{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private final CommandManager manager;
-    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     public Listener(EventWaiter waiter){
         manager = new CommandManager(waiter);
@@ -50,17 +44,31 @@ public class Listener extends ListenerAdapter{
 
     @Override
     public void onGuildVoiceUpdate(@NotNull GuildVoiceUpdateEvent event) {
-        AudioManager manager = event.getOldValue().getGuild().getAudioManager();
-        if (event.getOldValue() != manager.getConnectedChannel() ||
-        event.getOldValue() != event.getNewValue())
+        AudioManager manager;
+
+        try {
+            manager = event.getChannelJoined().getGuild().getAudioManager();
+        } catch (NullPointerException e){
+            manager = event.getChannelLeft().getGuild().getAudioManager();
+        }
+
+        // Cancel if bot isn't connected in the first place
+        if (!manager.isConnected())
             return;
 
-        if (event.getOldValue().getMembers().size() != 1){
-            executor.scheduleAtFixedRate(() -> {
-                manager.closeAudioConnection();
-                event.getOldValue().getGuild().getDefaultChannel().sendMessageFormat(
-                        "I have left `\uD83d\uDD0A %s` due to inactivity!", manager.getConnectedChannel().getName()).queue();
-            }, 0, 5, TimeUnit.SECONDS);
+        if (event.getOldValue() != manager.getConnectedChannel())
+            return;
+
+        // If bot is the only one in voice channel
+        if (manager.getConnectedChannel().getMembers().size() == 1){
+            AudioManager finalManager = manager;
+            executor.schedule(() -> {
+                finalManager.closeAudioConnection();
+                // TODO: Need to find a way to output message to Discord :/
+//                System.out.printf("I have left `\uD83D\uDD0A %s` due to inactivity!%n", finalManager.getConnectedChannel().getName());
+//                event.getOldValue().getGuild().getDefaultChannel().sendMessageFormat(
+//                        "I have left `\uD83d\uDD0A %s` due to inactivity!", finalManager.getConnectedChannel().getName()).queue();
+            }, 10, TimeUnit.SECONDS);
         }
     }
 }

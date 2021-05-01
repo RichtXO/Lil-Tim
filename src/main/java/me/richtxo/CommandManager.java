@@ -34,8 +34,6 @@ public class CommandManager {
         addCommand(new QueueCommand());
         addCommand(new RepeatCommand());
         addCommand(new RepeatOffCommand());
-
-
     }
 
     public List<Command> getCommands(){
@@ -43,21 +41,18 @@ public class CommandManager {
     }
 
     public Command getCommand(String search){
-        for (Command cmd : this.commandlist){
-            if (cmd.getName().equals(search) || Arrays.asList(cmd.getAliases()).contains(search)){
+        for (Command cmd : this.commandlist)
+            if (cmd.getName().equals(search) || Arrays.asList(cmd.getAliases()).contains(search))
                 return cmd;
-            }
-        }
+
         return null;
     }
 
     private void addCommand(Command cmd){
         boolean nameFound = this.commandlist.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(cmd.getName()));
-        if (!nameFound){
+        if (!nameFound)
             commandlist.add(cmd);
-        }
     }
-
 
     void handle(GuildMessageReceivedEvent event){
         String[] split = event.getMessage().getContentRaw()

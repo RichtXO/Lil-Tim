@@ -11,7 +11,6 @@ public abstract class Command {
     // Handle Event for Command
     public abstract void handle(CommandContext ctx);
 
-
     public String getName() {
         return this.name;
     }

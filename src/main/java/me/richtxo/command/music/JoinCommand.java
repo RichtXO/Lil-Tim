@@ -23,7 +23,7 @@ public class JoinCommand extends Command {
         final Member self = ctx.getGuild().getSelfMember();
         final GuildVoiceState selfVoiceState = self.getVoiceState();
 
-        assert selfVoiceState != null;
+        assert selfVoiceState != null && selfVoiceState.getChannel() != null;
         if (selfVoiceState.inVoiceChannel()){
             channel.sendMessageFormat("I'm already in `\uD83d\uDD0A %s`", selfVoiceState.getChannel().getName()).queue();
             return;
@@ -35,7 +35,7 @@ public class JoinCommand extends Command {
 
         assert memberVoiceState != null;
         if (!memberVoiceState.inVoiceChannel()){
-            channel.sendMessage("You need to be in a voice channel!").queue();
+            channel.sendMessage("You need to be in a voice channel, " + member.getEffectiveName() + "!").queue();
             return;
         }
 
@@ -48,6 +48,7 @@ public class JoinCommand extends Command {
         }
 
         audioManager.openAudioConnection(memberChannel);
-        channel.sendMessageFormat("Connecting to `\uD83d\uDD0A %s`", memberChannel.getName()).queue();
+        if (memberChannel != null)
+            channel.sendMessageFormat("Connecting to `\uD83d\uDD0A %s`", memberChannel.getName()).queue();
     }
 }

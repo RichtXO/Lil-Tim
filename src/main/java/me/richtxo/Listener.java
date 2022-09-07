@@ -70,13 +70,11 @@ public class Listener extends ListenerAdapter{
         // If bot is the only one in voice channel
         if (manager.getConnectedChannel().getMembers().size() == 1){
             AudioManager finalManager = manager;
-            executor.schedule(() -> {
-                finalManager.closeAudioConnection();
-                // TODO: Need to find a way to output message to Discord :/
-//                System.out.printf("I have left `\uD83D\uDD0A %s` due to inactivity!%n", finalManager.getConnectedChannel().getName());
-//                event.getOldValue().getGuild().getDefaultChannel().sendMessageFormat(
-//                        "I have left `\uD83d\uDD0A %s` due to inactivity!", finalManager.getConnectedChannel().getName()).queue();
-            }, 10, TimeUnit.SECONDS);
+            // TODO: Need to find a way to output message to Discord :/
+            //                System.out.printf("I have left `\uD83D\uDD0A %s` due to inactivity!%n", finalManager.getConnectedChannel().getName());
+            //                event.getOldValue().getGuild().getDefaultChannel().sendMessageFormat(
+            //                        "I have left `\uD83d\uDD0A %s` due to inactivity!", finalManager.getConnectedChannel().getName()).queue();
+            executor.schedule(finalManager::closeAudioConnection, 10, TimeUnit.SECONDS);
         }
     }
 }

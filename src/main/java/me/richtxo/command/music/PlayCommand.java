@@ -100,7 +100,7 @@ public class PlayCommand extends Command {
 
 
     private void searchSpotify(String input, TextChannel channel) throws ParseException, IOException, SpotifyWebApiException {
-        LinkConverter spotify = LinkConverter.getInstance();
+        LinkConverter spotify = new LinkConverter();
         ArrayList<String> result = spotify.convert(input);
 
         for (String song : result){

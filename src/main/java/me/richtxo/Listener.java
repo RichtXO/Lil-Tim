@@ -7,11 +7,14 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
+import org.apache.hc.core5.http.ParseException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -38,8 +41,13 @@ public class Listener extends ListenerAdapter{
         if (user.isBot() || event.isWebhookMessage())
            return;
 
-        if (event.getMessage().getContentRaw().startsWith(System.getenv("PREFIX")))
-            manager.handle(event);
+        if (event.getMessage().getContentRaw().startsWith(System.getenv("PREFIX"))) {
+            try {
+                manager.handle(event);
+            } catch (ParseException | IOException | SpotifyWebApiException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override

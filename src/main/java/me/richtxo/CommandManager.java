@@ -8,7 +8,10 @@ import me.richtxo.command.lilTim.*;
 import me.richtxo.command.music.*;
 import me.richtxo.command.utility.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.apache.hc.core5.http.ParseException;
+import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -54,7 +57,7 @@ public class CommandManager {
             commandlist.add(cmd);
     }
 
-    void handle(GuildMessageReceivedEvent event){
+    void handle(GuildMessageReceivedEvent event) throws ParseException, IOException, SpotifyWebApiException {
         String[] split = event.getMessage().getContentRaw()
                 .replaceFirst("(?i)" + Pattern.quote(System.getenv("PREFIX")), "")
                 .split("\\s+");

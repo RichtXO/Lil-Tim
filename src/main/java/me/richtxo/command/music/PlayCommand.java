@@ -105,7 +105,8 @@ public class PlayCommand extends Command {
 
         for (String song : result){
             PlayerManager manager = PlayerManager.getInstance();
-            String youtubeLink = String.valueOf(searchYoutube(song).get(0));
+            String vidId = String.valueOf(searchYoutube(song).get(0).getId().getVideoId());
+            String youtubeLink = "https://www.youtube.com/watch?v=" + vidId;
             manager.loadAndPlay(channel, youtubeLink);
         }
     }

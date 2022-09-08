@@ -103,6 +103,10 @@ public class PlayCommand extends Command {
         LinkConverter spotify = new LinkConverter();
         ArrayList<String> result = spotify.convert(input);
 
+        if (result.isEmpty()){
+            channel.sendMessage("I can't find anything with that Spotify link...").queue();
+            return;
+        }
         for (String song : result){
             PlayerManager manager = PlayerManager.getInstance();
             String vidId = String.valueOf(searchYoutube(song).get(0).getId().getVideoId());

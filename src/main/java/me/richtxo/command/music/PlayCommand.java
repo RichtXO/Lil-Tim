@@ -114,7 +114,10 @@ public class PlayCommand extends Command {
             String youtubeLink = "https://www.youtube.com/watch?v=" + vidId;
             manager.loadAndPlay(channel, youtubeLink);
         }
-        channel.sendMessage("Added Spotify Playlist!").queue();
+        if (result.size() != 1)
+            channel.sendMessage("Added Spotify Playlist to queue!").queue();
+        else
+            channel.sendMessage("Added Spotify Song to queue!").queue();
     }
 
 

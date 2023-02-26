@@ -83,6 +83,7 @@ public class PlayCommand extends Command {
                 searchSpotify(input, channel);
             }else{
                 PlayerManager manager = PlayerManager.getInstance();
+                channel.sendMessage("Adding youtube link to queue!").queue();
                 manager.loadAndPlay(channel, input);
             }
         }
@@ -113,6 +114,7 @@ public class PlayCommand extends Command {
             String youtubeLink = "https://www.youtube.com/watch?v=" + vidId;
             manager.loadAndPlay(channel, youtubeLink);
         }
+        channel.sendMessage("Added Spotify Playlist!").queue();
     }
 
 
@@ -193,6 +195,7 @@ public class PlayCommand extends Command {
 
                     int selection = Integer.parseInt(e.getMessage().getContentRaw());
                     PlayerManager manager = PlayerManager.getInstance();
+                    channel.sendMessageFormat("Adding `%s` to queue", input).queue();
                     manager.loadAndPlay(channel, "https://www.youtube.com/watch?v=" +
                             results.get(selection - 1).getId().getVideoId());
                     }, 15, TimeUnit.SECONDS,

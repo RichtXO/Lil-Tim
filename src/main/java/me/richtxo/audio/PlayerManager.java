@@ -46,8 +46,7 @@ public class PlayerManager {
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                channel.sendMessageFormat("Adding `%s` to queue ", track.getInfo().title).queue();
-
+                //channel.sendMessageFormat("Adding `%s` to queue ", track.getInfo().title).queue();
                 play(musicManager, track);
             }
 

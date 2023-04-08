@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     compile 'com.jagrosh:jda-utilities:3.0.5'
-    implementation("net.dv8tion:JDA:4.4.0_350")
+    implementation("net.dv8tion:JDA:4.4.1_353")
 
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.0'
